@@ -1,0 +1,43 @@
+Setting up the virtualenv for build and upload
+==============================================
+1) virtualenv pypi
+2) source pypi/bin/activate
+3) pip install twine
+4) pypi/bin/deactivate
+
+Building the package for PyPI upload
+====================================
+1) Source venv as above
+2) cd <this dir>
+3) python setup.py sdist
+     should create dist directory with .tar.gz file
+
+Upload to test repository (test.pypi.org)
+=========================================
+1) Source venv as above
+2) twine upload --config-file ./pypirc -r testpypi dist/vexatapi*.tar.gz
+3) Login to https://test.pypi.org with credentials from the pypirc file and
+   verify the uploaded package is present.
+4) In a new venv, install the package
+   (new_venv)
+   pip install -i https://test.pypi.org/simple vexatapi
+5) Verify it works.
+   python
+     >>> from vexatapi.vexata_api_proxy import (HAS_REQUESTS, VexataAPIProxy)
+     >>> print HAS_REQUESTS
+     True
+
+Upload to actual repository (pypi.org)
+======================================
+1) Source venv as above
+2) twine upload --config-file ./pypirc -r pypi dist/vexatapi*.tar.gz
+3) Login to https://pypi.org with credentials from the pypirc file and
+   verify the uploaded package is present.
+4) In a new venv, install the package to verify it can be imported:
+   (new_venv)
+   pip install vexatapi
+5) Verify it works.
+   python
+     >>> from vexatapi.vexata_api_proxy import (HAS_REQUESTS, VexataAPIProxy)
+     >>> print HAS_REQUESTS
+     True
