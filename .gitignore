@@ -1,1 +1,6 @@
 pypirc
+notes.txt
+dist
+dist/*/*
+vexatapi.egg-info
+*/*.pyc
